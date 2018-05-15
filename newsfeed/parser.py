@@ -20,28 +20,24 @@ def _parse_rss_contents(rss_feed, rss_id, template_id):
     template = ParserSets.objects.get(pk=template_id)
     soup = BeautifulSoup(rss_feed, "xml")
     items = soup.find_all(template.item)
-    results = []
-    for item in items: #todo dodac wiele szablonow tworzenia obiektu newspiece
-        results.append({
+    results = [{
             'Title': item.find(template.title),
             'Link': item.find(template.link),
             'Publish Date': item.find(template.publish_date),
             'Author': item.find(template.author),
             'Description': item.find(template.description),
             'Rss_id': rss_id
-        })
-
+        } for item in items]
     return results
 
 
 def scrape():
     result = []
     for entry in RssUrl.objects.all():
-        link = urllib.parse.urljoin(
-            entry.base_address,
-            entry.tail_address
-        )
-        rss_id = entry.id
-        template_id = entry.parser_template_id
-        result.extend(_get_rss_contents(link, rss_id, template_id))
+        result.extend(_get_rss_contents(
+            address=urllib.parse.urljoin(
+                entry.base_address,
+                entry.tail_address),
+            rss_id=entry.id,
+            template_id=entry.parser_template_id))
     populate_from_scraper(result)
