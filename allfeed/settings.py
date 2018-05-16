@@ -6,7 +6,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 from celery.schedules import crontab
-from allfeed.allfeed.secrets import secret_key
+from .secrets import secret_key
 import os
 
 
@@ -132,6 +132,7 @@ STATICFILES_DIRS = [
 
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
 
 
 CELERY_BROKER_URL = 'redis://localhost:6379'

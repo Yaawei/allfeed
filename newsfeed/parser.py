@@ -37,7 +37,8 @@ def scrape():
         result.extend(_get_rss_contents(
             address=urllib.parse.urljoin(
                 entry.base_address,
-                entry.tail_address),
+                entry.tail_address
+            ),
             rss_id=entry.id,
             template_id=entry.parser_template_id))
     populate_from_scraper(result)

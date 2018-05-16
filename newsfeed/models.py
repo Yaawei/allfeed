@@ -36,10 +36,16 @@ class NewsPiece(models.Model):
             "rss_source"
         )
 
+    def __str__(self):
+        return self.pk
+
 
 class UserFeedChoices(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rss_url = models.ForeignKey(RssUrl, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.pk
 
 
 class ParserSets(models.Model):
@@ -49,3 +55,6 @@ class ParserSets(models.Model):
     author = models.CharField(max_length=20)
     description = models.CharField(max_length=20)
     item = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.pk
