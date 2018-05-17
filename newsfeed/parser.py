@@ -40,5 +40,6 @@ def scrape():
                 entry.tail_address
             ),
             rss_id=entry.id,
-            template_id=entry.parser_template_id))
+            template_id=entry.parser_template_id
+        ))
     populate_from_scraper(result)
