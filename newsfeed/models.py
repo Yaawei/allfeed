@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import urllib.parse
+from django.db.models import Q
 
 
 class RssUrl(models.Model):
@@ -38,6 +39,10 @@ class NewsPiece(models.Model):
 
     def __repr__(self):
         return '%s (%s)' % (type(self), self.pk)
+
+    def site_filtered_queryset(*args):
+        listargs = [num for arg in args for num in arg]
+        return NewsPiece.objects.filter(rss_source__pk__in=listargs).order_by('-publish_date')
 
 
 class UserFeedChoices(models.Model):
