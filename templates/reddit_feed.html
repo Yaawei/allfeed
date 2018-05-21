@@ -1,5 +1,34 @@
 {% extends 'base.html' %}
+{% load newsfeed_extras %}
 
 {% block content %}
-  <h1>example reddit</h1>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Title</th>
+        <th>Publish Date</th>
+        <th>Author</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% filtered_querysets 6 as queries %}
+      {% for piece in queries %}
+        <tr>
+          <td>
+            <p>{{ piece.title }}</p>
+          </td>
+          <td>
+            <p>{{ piece.publish_date }}</p>
+          </td>
+          <td>
+            <p>{{ piece.author }}</p>
+          </td>
+          <td>
+            <a href="{{ piece.url }}">{{ piece.url }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

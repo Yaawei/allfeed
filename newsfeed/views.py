@@ -11,6 +11,9 @@ class HomepageView(LoginRequiredMixin, ListView):
     template_name = 'home.html'
     login_url = 'login'
 
+    def get_queryset(self):
+        return NewsPiece.objects.order_by('-publish_date')
+
 
 def test2(request):
     return render(request, 'reddit_feed.html',)
