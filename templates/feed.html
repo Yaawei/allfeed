@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for piece in newspieces %}
+        <tr>
+          <td>
+            <a href="{{ piece.url }}">{{ piece.title }}</a>
+            <small class="text-muted">
+              {{ piece.publish_date }}
+            </small>
+            <small class="text-muted">
+              {{ piece.author }}
+            </small>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
