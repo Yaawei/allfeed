@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import urllib.parse
-from django.db.models import Q
 
 
 class RssUrl(models.Model):
