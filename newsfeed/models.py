@@ -13,6 +13,9 @@ class RssUrl(models.Model):
     def __repr__(self):
         return urllib.parse.urljoin(self.base_address, self.tail_address)
 
+    def __str__(self):
+        return urllib.parse.urljoin(self.base_address, self.tail_address)
+
 
 class NewsPiece(models.Model):
     title = models.CharField(max_length=200)
@@ -51,6 +54,8 @@ class UserFeedChoices(models.Model):
     def __repr__(self):
         return '%s (%s)' % (type(self), self.pk)
 
+    class Meta:
+        unique_together = ('user', 'rss_url')
 
 class ParserSets(models.Model):
     title = models.CharField(max_length=20)
