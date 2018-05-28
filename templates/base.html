@@ -30,11 +30,14 @@
                         Homepage
                     </a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="sidebar-brand">
-                    <a href="{% url 'reddit' %}">
-                        Reddit Feed
+                    <a href="{% url 'today' user.username %}">
+                        Today
                     </a>
                 </li>
+                {% endif %}
+
             </ul>
             {% if user.is_authenticated %}
             <a class="sidebar-profile-button" href="#">
