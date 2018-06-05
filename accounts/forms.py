@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm
-from newsfeed.models import UserFeedChoices, RssUrl
+from newsfeed.models import RssUrl
 
 
 class SignUpForm(UserCreationForm):
@@ -22,12 +21,9 @@ class SignUpForm(UserCreationForm):
         )
 
 
-class FeedSubscriptionsForm(ModelForm):
-    class Meta:
-        model = UserFeedChoices
-        fields = ['rss_url']
-        # checkbox widget doesnt work like it should
-        widgets = {
-            'rss_url': forms.CheckboxSelectMultiple
-        }
-
+class FeedSubscriptionsForm(forms.Form):
+    subscription = forms.ModelChoiceField(
+        queryset=RssUrl.objects.all(),
+        widget=forms.RadioSelect,
+        empty_label=None
+    )
