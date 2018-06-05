@@ -4,23 +4,45 @@
   <table class="table">
     <thead class="thead-inverse">
       <tr>
-        <th>Title</th>
+        <th>Source</th>
+        <th>Info</th>
       </tr>
     </thead>
     <tbody>
       {% for piece in newspieces %}
         <tr>
           <td>
-            <a href="{{ piece.url }}">{{ piece.title }}</a>
-            <small class="text-muted">
+            <small>
+              {{ piece.rss_source }}
+            </small>
+          </td>
+          <td>
+                        <small class="text-muted">
               {{ piece.publish_date }}
             </small>
             <small class="text-muted">
               {{ piece.author }}
             </small>
+            <p>
+              <a href="{{ piece.url }}">
+                {{ piece.title }}
+              </a>
+              <div align="left">
+                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapse-description-{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseExample" >
+                  More
+                </button>
+              </div>
+              <div class="collapse" id="collapse-description-{{ forloop.counter0 }}">
+                <div class="card card-body"  >
+                  {# mega unsafe, XSS possibility #}
+                  {% autoescape off %} {{ piece.description }} {% endautoescape %}
+                </div>
+              </div>
+            </p>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+{% include 'includes/pagination.html' %}
 {% endblock %}
