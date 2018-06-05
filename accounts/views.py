@@ -1,9 +1,7 @@
 from django.contrib.auth import login
 from .forms import SignUpForm, FeedSubscriptionsForm
 from django.shortcuts import render, redirect
-from django.db.utils import IntegrityError
 from newsfeed.models import UserFeedChoices
-
 
 
 def signup(request):
@@ -25,13 +23,9 @@ def subscribe(request):
         if form.is_valid():
             subscriptions = form.cleaned_data.get('subscription')
             if subscriptions:
-                for feed in subscriptions:
-                    try:
-                        sub = UserFeedChoices(user=user, rss_url=feed)
-                        sub.save()
-                    except IntegrityError:
-                        continue
-        return redirect('home')
+                for query in subscriptions:
+                    UserFeedChoices.objects.get_or_create(user=user, rss_url=query)
+                return redirect('today')
     else:
         form = FeedSubscriptionsForm()
     return render(request, 'subscription_form.html', {'form': form})
