@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
-from .models import NewsPiece
+from .models import NewsPiece, UserFeedChoices, RssUrl
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -19,6 +19,10 @@ class GenericFilteredView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         try:
-            return NewsPiece.objects.filter(**self.filter_kwargs).order_by('-publish_date')
+            rss_urls_of_user_subs = RssUrl.objects.filter(userfeedchoices__user=self.request.user)
+            return NewsPiece.objects.filter(
+                **self.filter_kwargs,
+                rss_source__in=rss_urls_of_user_subs
+            ).order_by('-publish_date')
         except TypeError:
             return NewsPiece.objects.order_by('-publish_date')
