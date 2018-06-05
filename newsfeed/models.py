@@ -14,7 +14,7 @@ class RssUrl(models.Model):
         return urllib.parse.urljoin(self.base_address, self.tail_address)
 
     def __str__(self):
-        return urllib.parse.urljoin(self.base_address, self.tail_address)
+        return self.description
 
 
 class NewsPiece(models.Model):
@@ -42,10 +42,6 @@ class NewsPiece(models.Model):
     def __repr__(self):
         return '%s (%s)' % (type(self), self.pk)
 
-    def site_filtered_queryset(*args):
-        listargs = [num for arg in args for num in arg]
-        return NewsPiece.objects.filter(rss_source__pk__in=listargs).order_by('-publish_date')
-
 
 class UserFeedChoices(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -56,6 +52,7 @@ class UserFeedChoices(models.Model):
 
     class Meta:
         unique_together = ('user', 'rss_url')
+
 
 class ParserSets(models.Model):
     title = models.CharField(max_length=20)
