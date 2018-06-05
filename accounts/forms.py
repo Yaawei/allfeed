@@ -22,7 +22,7 @@ class SignUpForm(UserCreationForm):
 
 
 class FeedSubscriptionsForm(forms.Form):
-    subscriptions = forms.ModelMultipleChoiceField(
+    subscription = forms.ModelMultipleChoiceField(
         queryset=RssUrl.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
