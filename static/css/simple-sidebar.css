@@ -42,7 +42,7 @@ body {
 #page-content-wrapper {
   width: 100%;
   position: absolute;
-  padding: 500px;
+  padding: 250px;
 }
 
 #button {
@@ -113,7 +113,7 @@ body {
 
 
 
-@media(min-width:768px) {
+@media(min-width:320px) {
   #wrapper {
     padding-left: 0;
   }
