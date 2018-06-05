@@ -4,36 +4,36 @@
   <table class="table">
     <thead class="thead-inverse">
       <tr>
-        <th>Source</th>
-        <th>Info</th>
+        <th width="200" align="left">Source</th>
+        <th width="800" align="left">Info</th>
       </tr>
     </thead>
     <tbody>
       {% for piece in newspieces %}
         <tr>
-          <td>
+          <td width="200" align="left">
             <small>
               {{ piece.rss_source }}
             </small>
           </td>
-          <td>
-                        <small class="text-muted">
+          <td width="800" align="left">
+            <small class="text-muted">
               {{ piece.publish_date }}
             </small>
             <small class="text-muted">
-              {{ piece.author }}
+             by {{ piece.author }}
             </small>
             <p>
               <a href="{{ piece.url }}">
                 {{ piece.title }}
               </a>
-              <div align="left">
-                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapse-description-{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseExample" >
-                  More
+              <div >
+                <button class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-description-{{ forloop.counter0 }}" aria-expanded="false">
+                  <i class="fa fa-ellipsis-h"></i>
                 </button>
               </div>
               <div class="collapse" id="collapse-description-{{ forloop.counter0 }}">
-                <div class="card card-body"  >
+                <div class="card card-body">
                   {# mega unsafe, XSS possibility #}
                   {% autoescape off %} {{ piece.description }} {% endautoescape %}
                 </div>
