@@ -21,7 +21,7 @@ class NewsPiece(models.Model):
     title = models.CharField(max_length=200)
     publish_date = models.DateTimeField()
     description = models.TextField(max_length=20000)
-    url = models.CharField(max_length=255)
+    url = models.URLField(max_length=255)
     author = models.CharField(max_length=100, null=True)
     rss_source = models.ForeignKey(
         'RssUrl',
