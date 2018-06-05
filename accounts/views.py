@@ -1,10 +1,9 @@
 from django.contrib.auth import login
 from .forms import SignUpForm, FeedSubscriptionsForm
 from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import FormView
+from django.db.utils import IntegrityError
 from newsfeed.models import UserFeedChoices
-from django.contrib.auth.models import User
+
 
 
 def signup(request):
@@ -18,26 +17,21 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-#todo formularz do subskrypcji
 
-class SubscriptionView(LoginRequiredMixin, FormView):
-    form_class = FeedSubscriptionsForm
-    template_name = 'subscription_form.html'
-    success_url = 'abcd'
-    model = UserFeedChoices
-    user = User.objects.first()
-
-    def form_invalid(self, form):
-        print(form._errors)
-        return super(SubscriptionView, self).form_invalid(form)
-
-
-    def form_valid(self, form):
-        print(form.fields)
-        subscription = form.save(commit=False)
-        subscription.user = self.user
-        subscription.save()
-        return super(SubscriptionView, self).form_valid(form)
-
-
-
+def subscribe(request):
+    user = request.user
+    if request.method == 'POST':
+        form = FeedSubscriptionsForm(request.POST)
+        if form.is_valid():
+            subscriptions = form.cleaned_data.get('subscription')
+            if subscriptions:
+                for feed in subscriptions:
+                    try:
+                        sub = UserFeedChoices(user=user, rss_url=feed)
+                        sub.save()
+                    except IntegrityError:
+                        continue
+        return redirect('home')
+    else:
+        form = FeedSubscriptionsForm()
+    return render(request, 'subscription_form.html', {'form': form})
