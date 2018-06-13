@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib.parse
 import requests
-from .models import RssUrl, ParserSets
+from .models import RssUrl, ParserSet
 from .populate_db import populate_from_scraper
 
 
@@ -17,7 +17,7 @@ def _get_rss_contents(address, rss_id, template_id):
 
 
 def _parse_rss_contents(rss_feed, rss_id, template_id):
-    template = ParserSets.objects.get(pk=template_id)
+    template = ParserSet.objects.get(pk=template_id)
     soup = BeautifulSoup(rss_feed, "xml")
     items = soup.find_all(template.item)
     results = [{

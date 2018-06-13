@@ -18,7 +18,7 @@ class GenericFilteredView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         rss_urls_of_user_subscriptions = RssUrl.objects.filter(
-            userfeedchoices__user=self.request.user
+            userfeedchoice__user=self.request.user
         )
 
         return NewsPiece.objects.filter(

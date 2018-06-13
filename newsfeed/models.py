@@ -7,8 +7,8 @@ class RssUrl(models.Model):
     base_address = models.CharField(max_length=128)
     tail_address = models.CharField(max_length=128)
     description = models.CharField(max_length=255)
-    parser_template = models.ForeignKey('ParserSets', on_delete=models.CASCADE, default=1)
-    user_choices = models.ManyToManyField(User, through='UserFeedChoices')
+    parser_template = models.ForeignKey('ParserSet', on_delete=models.CASCADE, default=1)
+    user_choices = models.ManyToManyField(User, through='UserFeedChoice')
 
     def __repr__(self):
         return urllib.parse.urljoin(self.base_address, self.tail_address)
@@ -43,7 +43,7 @@ class NewsPiece(models.Model):
         return '%s (%s)' % (type(self), self.pk)
 
 
-class UserFeedChoices(models.Model):
+class UserFeedChoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rss_url = models.ForeignKey(RssUrl, on_delete=models.CASCADE)
 
@@ -54,7 +54,7 @@ class UserFeedChoices(models.Model):
         unique_together = ('user', 'rss_url')
 
 
-class ParserSets(models.Model):
+class ParserSet(models.Model):
     title = models.CharField(max_length=20)
     link = models.CharField(max_length=20)
     publish_date = models.CharField(max_length=20)
