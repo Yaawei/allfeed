@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 <form id="sub-form" method="post" action="">
     {% csrf_token %}
     {{ form.management_form }}
@@ -13,8 +11,7 @@
         </tbody>
     </div>
   <div align="center">
-  <button type="submit" class="btn btn-secondary" align="center">Subscribe</button>
+  <button type="submit" class="btn btn-secondary" align="center">Submit</button>
   </div>
-
 </form>
 {% endblock %}
