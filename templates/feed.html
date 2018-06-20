@@ -27,14 +27,22 @@
               <a href="{{ piece.url }}">
                 {{ piece.title }}
               </a>
-              <div >
+              <div>
                 <button class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-description-{{ forloop.counter0 }}" aria-expanded="false">
                   <i class="fa fa-ellipsis-h"></i>
                 </button>
               </div>
+              <form id="bookmark-form-{{ forloop.counter0 }}" method="post" action="">
+                {% csrf_token %}
+                <div>
+                  {{ form.as_p }}
+                  <input type="hidden" name="bookmarked_obj" id="id_bookmarked_obj" value="{{ piece.id }}" />
+                </div>
+                <button  type="submit" class="btn btn-secondary">Submit</button>
+              </form>
               <div class="collapse" id="collapse-description-{{ forloop.counter0 }}">
                 <div class="card card-body">
-                  {# mega unsafe, XSS possibility #}
+                  {# unsafe, XSS possibility #}
                   {% autoescape off %} {{ piece.description }} {% endautoescape %}
                 </div>
               </div>
