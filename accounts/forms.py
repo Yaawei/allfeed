@@ -26,3 +26,8 @@ class FeedSubscriptionsForm(forms.Form):
         queryset=RssUrl.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
+
+
+class BookmarkForm(forms.Form):
+    bookmark = forms.BooleanField()
+    bookmarked_obj = forms.CharField(widget=forms.HiddenInput)
