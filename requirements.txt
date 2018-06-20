@@ -1,0 +1,6 @@
+Celery==4.1.0
+Django==2.0.4
+requests==2.18.4
+beautifulsoup4==4.6.0
+python_dateutil==2.7.3
+djangorestframework==3.8.2
